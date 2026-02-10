@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCE - GlobalConnect Elite | Exclusive Chat</title>
+    <style>
+        /* ============ GCE PREMIUM THEME ============ */
+        :root {
+            --gce-primary: #6366f1;
+            --gce-primary-light: #818cf8;
+            --gce-primary-dark: #4f46e5;
+            --gce-secondary: #10b981;
+            --gce-accent: #f59e0b;
+            --gce-danger: #ef4444;
+            --gce-success: #10b981;
+            
+            --human-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --ai-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --admin-bg: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            
+            --bg-light: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-hover: #f1f5f9;
+            
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e1;
+            
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ============ LOADING SCREEN ============ */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--human-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-md);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--human-bg);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--human-bg);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-full);
+            border: none;
+            background: var(--gce-primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--gce-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            padding: 4rem 2rem;
+            background: var(--human-bg);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: var(--radius-full);
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--gce-primary);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ============ LOGIN MODAL ============ */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gce-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* ============ CHAT INTERFACE ============ */
+        .chat-container {
+            display: none;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .chat-header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .room-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-info p {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chat-area {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1rem;
+            height: 70vh;
+        }
+
+        .rooms-sidebar {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .room-item {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .room-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .room-item.active {
+            border-color: var(--gce-primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .messages-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .message.sent {
+            background: var(--gce-primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        .message.received {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-bottom-left-radius: var(--radius-sm);
+        }
+
+        .message-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+        }
+
+        .message-input button {
+            padding: 1rem 1.5rem;
+            background: var(--gce-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* ============ ADMIN PANEL ============ */
+        .admin-panel {
+            display: none;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .chat-area {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .rooms-sidebar {
+                display: none;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="loading-text">GCE - GlobalConnect Elite</div>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">GCE</div>
+                <div class="logo-text">GlobalConnect Elite</div>
+            </a>
+            <div class="nav-links">
+                <button class="nav-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="heroSection">
+        <h1>Exclusive Anonymous Chat</h1>
+        <p>Experience premium chatting with strict room separation. Human rooms for real conversations, AI rooms for intelligent assistants. No mixing allowed.</p>
+        <div class="hero-btns">
+            <button class="btn btn-primary" id="startChatBtn">
+                <i class="fas fa-comments"></i> Start Chatting
+            </button>
+            <button class="btn btn-secondary" id="learnMoreBtn">
+                <i class="fas fa-info-circle"></i> Learn More
+            </button>
+        </div>
+    </section>
+
+    <!-- Chat Interface -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="room-info">
+                <h2 id="roomTitle">Human Connection Room</h2>
+                <p id="roomStatus">
+                    <i class="fas fa-users"></i>
+                    <span id="onlineCount">0</span> users online
+                </p>
+            </div>
+            <button class="nav-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        
+        <div class="chat-area">
+            <div class="rooms-sidebar">
+                <div class="room-item active" data-room="human">
+                    <h3>Human Room</h3>
+                    <p>Real humans only</p>
+                </div>
+                <div class="room-item" data-room="ai">
+                    <h3>AI Room</h3>
+                    <p>AI assistants only</p>
+                </div>
+            </div>
+            
+            <div class="messages-container">
+                <div class="messages" id="messagesContainer">
+                    <!-- Messages will appear here -->
+                    <div class="message received">
+                        <strong>System:</strong> Welcome to GCE Chat!
+                    </div>
+                </div>
+                
+                <div class="message-input">
+                    <input type="text" id="messageInput" placeholder="Type your message...">
+                    <button id="sendBtn">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="chat-header">
+            <h2>Admin Dashboard</h2>
+            <button class="nav-btn" id="backToChatBtn">
+                <i class="fas fa-arrow-left"></i> Back to Chat
+            </button>
+        </div>
+        
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalUsers">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="humanUsers">0</div>
+                <div class="stat-label">Human Room</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="aiBots">15</div>
+                <div class="stat-label">AI Bots</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="messagesSent">0</div>
+                <div class="stat-label">Messages</div>
+            </div>
+        </div>
+        
+        <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+            <h3 style="margin-bottom: 1rem;">Room Controls</h3>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" id="addBotBtn">
+                    <i class="fas fa-plus"></i> Add AI Bot
+                </button>
+                <button class="btn btn-secondary" id="clearChatBtn">
+                    <i class="fas fa-trash"></i> Clear Chat
+                </button>
+                <button class="btn btn-secondary" id="refreshBtn">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Join GCE Chat</h2>
+                <p>Your identity stays anonymous</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Choose Your Nickname</label>
+                    <input type="text" class="form-input" id="nickname" 
+                           placeholder="Enter your chat name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Select Room Type</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <button type="button" class="room-select-btn active" data-room="human">
+                            <i class="fas fa-users"></i> Human Room
+                        </button>
+                        <button type="button" class="room-select-btn" data-room="ai">
+                            <i class="fas fa-robot"></i> AI Room
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Enter Chat
+                </button>
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="adminAccessBtn">
+                        <i class="fas fa-lock"></i> Admin Access
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Login</h2>
+                <p>Enter admin password to continue</p>
+            </div>
+            
+            <form id="adminForm">
+                <div class="form-group">
+                    <label class="form-label">Admin Password</label>
+                    <input type="password" class="form-input" id="adminPassword" 
+                           placeholder="Enter password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-unlock"></i> Login as Admin
+                </button>
+                
+                <button type="button" class="btn btn-secondary" 
+                        style="width: 100%; margin-top: 0.5rem;" id="backToLoginBtn">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ============ GCE CHAT APPLICATION ============
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after 2 seconds
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 300);
+            }, 2000);
+            
+            // State management
+            const state = {
+                user: null,
+                currentRoom: 'human',
+                isAdmin: false,
+                messages: [],
+                onlineUsers: 0,
+                aiBots: 15
+            };
+            
+            // DOM Elements
+            const elements = {
+                heroSection: document.getElementById('heroSection'),
+                chatContainer: document.getElementById('chatContainer'),
+                adminPanel: document.getElementById('adminPanel'),
+                loginModal: document.getElementById('loginModal'),
+                adminModal: document.getElementById('adminModal'),
+                messagesContainer: document.getElementById('messagesContainer'),
+                messageInput: document.getElementById('messageInput'),
+                onlineCount: document.getElementById('onlineCount'),
+                roomTitle: document.getElementById('roomTitle'),
+                roomStatus: document.getElementById('roomStatus'),
+                totalUsers: document.getElementById('totalUsers'),
+                humanUsers: document.getElementById('humanUsers'),
+                aiBots: document.getElementById('aiBots'),
+                messagesSent: document.getElementById('messagesSent')
+            };
+            
+            // Event Listeners
+            document.getElementById('loginBtn').addEventListener('click', showLoginModal);
+            document.getElementById('startChatBtn').addEventListener('click', showLoginModal);
+            document.getElementById('learnMoreBtn').addEventListener('click', showLearnMore);
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            document.getElementById('sendBtn').addEventListener('click', sendMessage);
+            document.getElementById('backToChatBtn').addEventListener('click', showChat);
+            document.getElementById('adminAccessBtn').addEventListener('click', showAdminLogin);
+            document.getElementById('backToLoginBtn').addEventListener('click', showLoginModal);
+            document.getElementById('addBotBtn').addEventListener('click', addAiBot);
+            document.getElementById('clearChatBtn').addEventListener('click', clearChat);
+            document.getElementById('refreshBtn').addEventListener('click', refreshStats);
+            
+            // Login Form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nickname = document.getElementById('nickname').value.trim();
+                if (!nickname) {
+                    alert('Please enter a nickname');
+                    return;
+                }
+                
+                state.user = {
+                    id: 'user_' + Date.now(),
+                    nickname: nickname,
+                    room: document.querySelector('.room-select-btn.active').dataset.room
+                };
+                
+                localStorage.setItem('gce_user', JSON.stringify(state.user));
+                state.currentRoom = state.user.room;
+                showChat();
+                updateRoomInfo();
+                addSystemMessage(`Welcome ${nickname} to ${state.currentRoom === 'human' ? 'Human Room' : 'AI Room'}!`);
+            });
+            
+            // Admin Form
+            document.getElementById('adminForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = document.getElementById('adminPassword').value;
+                if (password === 'admin123') {
+                    state.isAdmin = true;
+                    showAdminPanel();
+                } else {
+                    alert('Incorrect password');
+                }
+            });
+            
+            // Room Selection
+            document.querySelectorAll('.room-select-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.room-select-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            document.querySelectorAll('.room-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const room = this.dataset.room;
+                    if (room !== state.currentRoom) {
+                        document.querySelectorAll('.room-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                        state.currentRoom = room;
+                        updateRoomInfo();
+                        addSystemMessage(`Switched to ${room === 'human' ? 'Human Room' : 'AI Room'}`);
+                    }
+                });
+            });
+            
+            // Message Input Enter Key
+            elements.messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Functions
+            function showLoginModal() {
+                elements.loginModal.classList.add('show');
+            }
+            
+            function hideModals() {
+                elements.loginModal.classList.remove('show');
+                elements.adminModal.classList.remove('show');
+            }
+            
+            function showAdminLogin() {
+                elements.loginModal.classList.remove('show');
+                elements.adminModal.classList.add('show');
+            }
+            
+            function showLearnMore() {
+                alert('GCE - GlobalConnect Elite\n\nFeatures:\n• 100% Anonymous Chat\n• Human & AI Rooms Separated\n• Mobile Friendly\n• No Registration Required\n• Real-time Messaging\n\nAdmin Password: admin123');
+            }
+            
+            function showChat() {
+                hideModals();
+                elements.heroSection.style.display = 'none';
+                elements.chatContainer.style.display = 'block';
+                elements.adminPanel.style.display = 'none';
+                
+                // Load saved user
+                const savedUser = localStorage.getItem('gce_user');
+                if (savedUser) {
+                    state.user = JSON.parse(savedUser);
+                    state.currentRoom = state.user.room;
+                    updateRoomInfo();
+                    
+                    // Select correct room
+                    document.querySelectorAll('.room-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.dataset.room === state.currentRoom) {
+                            item.classList.add('active');
+                        }
+                    });
+                    
+                    addSystemMessage(`Welcome back ${state.user.nickname}!`);
+                }
+                
+                updateOnlineUsers();
+            }
+            
+            function showAdminPanel() {
+                hideModals();
+                elements.heroSection.style.display = 'none';
+                elements.chatContainer.style.display = 'none';
+                elements.adminPanel.style.display = 'block';
+                refreshStats();
+            }
+            
+            function logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('gce_user');
+                    state.user = null;
+                    state.isAdmin = false;
+                    elements.heroSection.style.display = 'block';
+                    elements.chatContainer.style.display = 'none';
+                    elements.adminPanel.style.display = 'none';
+                    elements.messagesContainer.innerHTML = `
+                        <div class="message received">
+                            <strong>System:</strong> Welcome to GCE Chat!
+                        </div>
+                    `;
+                    state.messages = [];
+                }
+            }
+            
+            function sendMessage() {
+                const message = elements.messageInput.value.trim();
+                if (!message || !state.user) return;
+                
+                // Check if user is in AI room (humans can't send messages in AI room)
+                if (state.currentRoom === 'ai' && !state.isAdmin) {
+                    addSystemMessage('⚠️ Humans cannot send messages in AI Room');
+                    elements.messageInput.value = '';
+                    return;
+                }
+                
+                const messageObj = {
+                    id: Date.now(),
+                    user: state.user.nickname,
+                    text: message,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    type: 'sent'
+                };
+                
+                addMessage(messageObj);
+                state.messages.push(messageObj);
+                elements.messageInput.value = '';
+                elements.messagesSent.textContent = parseInt(elements.messagesSent.textContent) + 1;
+                
+                // If in human room, simulate other users
+                if (state.currentRoom === 'human') {
+                    setTimeout(() => {
+                        const responses = [
+                            "Hello! How are you?",
+                            "Nice to meet you!",
+                            "Where are you from?",
+                            "I'm enjoying this chat!",
+                            "What do you like to do?",
+                            "The weather is nice today!",
+                            "Have you tried the AI room?",
+                            "This is a great platform!"
+                        ];
+                        
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        const randomUser = ['Alex', 'Sam', 'Taylor', 'Jordan'][Math.floor(Math.random() * 4)];
+                        
+                        const responseMsg = {
+                            id: Date.now(),
+                            user: randomUser,
+                            text: randomResponse,
+                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                            type: 'received'
+                        };
+                        
+                        addMessage(responseMsg);
+                        state.messages.push(responseMsg);
+                    }, 1000 + Math.random() * 2000);
+                }
+                
+                // If in AI room, simulate AI response
+                if (state.currentRoom === 'ai') {
+                    setTimeout(() => {
+                        const aiResponses = [
+                            "Hello! I'm an AI assistant. How can I help you?",
+                            "Interesting! Tell me more about that.",
+                            "I understand. What would you like to know?",
+                            "That's fascinating! I'm learning from our conversation.",
+                            "As an AI, I can help you practice conversations!",
+                            "Would you like to discuss something specific?",
+                            "I'm here to assist with any questions you have!",
+                            "This is a safe space for learning and practice."
+                        ];
+                        
+                        const aiNames = ['AI-Assistant', 'ChatBot', 'HelperBot', 'LearnBot'];
+                        const randomAI = aiNames[Math.floor(Math.random() * aiNames.length)];
+                        const randomAIResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+                        
+                        const aiMsg = {
+                            id: Date.now(),
+                            user: randomAI,
+                            text: randomAIResponse,
+                            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                            type: 'received'
+                        };
+                        
+                        addMessage(aiMsg);
+                        state.messages.push(aiMsg);
+                    }, 500 + Math.random() * 1500);
+                }
+            }
+            
+            function addMessage(msg) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${msg.type}`;
+                messageDiv.innerHTML = `
+                    <strong>${msg.user}:</strong> ${msg.text}
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.25rem;">${msg.time}</div>
+                `;
+                elements.messagesContainer.appendChild(messageDiv);
+                elements.messagesContainer.scrollTop = elements.messagesContainer.scrollHeight;
+            }
+            
+            function addSystemMessage(text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message received';
+                messageDiv.innerHTML = `<strong>System:</strong> ${text}`;
+                elements.messagesContainer.appendChild(messageDiv);
+                elements.messagesContainer.scrollTop = elements.messagesContainer.scrollHeight;
+            }
+            
+            function updateRoomInfo() {
+                elements.roomTitle.textContent = state.currentRoom === 'human' ? 'Human Connection Room' : 'AI Assistant Room';
+                elements.roomStatus.innerHTML = `
+                    <i class="fas fa-${state.currentRoom === 'human' ? 'users' : 'robot'}"></i>
+                    <span id="onlineCount">${state.currentRoom === 'human' ? state.onlineUsers : state.aiBots}</span> 
+                    ${state.currentRoom === 'human' ? 'humans online' : 'AI assistants'}
+                `;
+            }
+            
+            function updateOnlineUsers() {
+                // Simulate random online users
+                state.onlineUsers = Math.floor(Math.random() * 50) + 20;
+                elements.onlineCount.textContent = state.onlineUsers;
+                elements.humanUsers.textContent = state.onlineUsers;
+                
+                // Update every 30 seconds
+                setInterval(() => {
+                    const change = Math.floor(Math.random() * 10) - 3;
+                    state.onlineUsers = Math.max(10, state.onlineUsers + change);
+                    elements.onlineCount.textContent = state.onlineUsers;
+                    elements.humanUsers.textContent = state.onlineUsers;
+                }, 30000);
+            }
+            
+            function refreshStats() {
+                elements.totalUsers.textContent = state.onlineUsers + state.aiBots;
+                elements.messagesSent.textContent = state.messages.length;
+            }
+            
+            function addAiBot() {
+                if (state.isAdmin) {
+                    state.aiBots++;
+                    elements.aiBots.textContent = state.aiBots;
+                    refreshStats();
+                    alert(`AI Bot added! Total: ${state.aiBots}`);
+                }
+            }
+            
+            function clearChat() {
+                if (confirm('Clear all messages?')) {
+                    elements.messagesContainer.innerHTML = `
+                        <div class="message received">
+                            <strong>System:</strong> Chat cleared!
+                        </div>
+                    `;
+                    state.messages = [];
+                    elements.messagesSent.textContent = '0';
+                }
+            }
+            
+            // Initialize
+            updateOnlineUsers();
+            setInterval(refreshStats, 5000);
+            
+            // Check for saved user on load
+            const savedUser = localStorage.getItem('gce_user');
+            if (savedUser) {
+                setTimeout(() => {
+                    state.user = JSON.parse(savedUser);
+                    state.currentRoom = state.user.room;
+                    showChat();
+                    addSystemMessage(`Welcome back ${state.user.nickname}! Session restored.`);
+                }, 2500);
+            }
+            
+            console.log('GCE Chat loaded successfully!');
+        });
+    </script>
+</body>
+</html>
